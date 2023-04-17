@@ -1,0 +1,11 @@
+2023-03-17 14:33:13,115 - DEBUG - this is an debug
+2023-03-17 14:33:13,116 - INFO - this is an info
+2023-03-17 14:33:13,116 - WARNING - this is an warning
+2023-03-17 14:33:13,116 - ERROR - this is an error
+2023-03-17 14:33:13,116 - CRITICAL - this is an critical
+2023-03-17 17:17:46,699 - ERROR - localhost insert failed: not all arguments converted during string formatting - insert into  app_user values (user_name, password)
+2023-03-17 17:21:45,656 - ERROR - localhost insert failed: not all arguments converted during string formatting - insert into  app_user values (user_name, password)
+2023-03-17 17:45:17,449 - ERROR - localhost execute failed: unsupported format character 'w' (0x77) at index 31 - update app_user set password=% where user_name=%s
+2023-03-17 17:48:05,784 - ERROR - localhost execute failed: (1267, "Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '='") - update app_user set password=%s where user_name=%s
+2023-03-20 14:45:45,482 - ERROR - localhost select failed: unsupported operand type(s) for %: 'tuple' and 'tuple' - (('App.Login.LoginCheck', '登录验证', 'select count(*) from app_user where user_name=%s and password=%s', '用户登录'),)
+2023-03-20 15:08:55,419 - ERROR - get sql id failed:  - App.Login.LoginCheck1
