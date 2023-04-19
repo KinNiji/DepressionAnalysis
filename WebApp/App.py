@@ -12,6 +12,9 @@ from WebApp.Logic.User import User
 from WebApp.Pages.Login import login
 from WebApp.Pages.OverviewData import overview_data
 from WebApp.Pages.OverviewModel import overview_model
+from WebApp.Pages.AnalysisUpload import analysis_upload
+from WebApp.Pages.AnalysisShow import analysis_show
+from WebApp.Pages.ForecastScale import forecast_scale
 from WebApp.Pages.ForecastProbability import forecast_probability
 from WebApp.Pages.Option import generate_option
 from WebApp.Pages.PathError import path_error
@@ -117,15 +120,15 @@ def url_route(pathname, user_info):
         elif path_list[0] == "analysis":
             if len(path_list) == 2:
                 if path_list[1] == "upload":
-                    return overview_data
+                    return analysis_upload
                 elif path_list[1] == "show":
-                    return overview_model
+                    return analysis_show
         elif path_list[0] == "forecast":
             if len(path_list) == 2:
                 if path_list[1] == "scale":
-                    return overview_data
+                    return forecast_scale
                 elif path_list[1] == "probability":
-                    return overview_model
+                    return forecast_probability
         elif path_list[0] == "option":
             return generate_option(user_info)
     else:

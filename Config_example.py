@@ -166,10 +166,10 @@ EXTRACTED_DTYPE = {
 HOST = "localhost"
 PORT = 3306
 USER = "root"
-PASSWORD = "110crAftion"
-DATABASE = "depression"
+PASSWORD = "your_password"
+DATABASE = "your_database"
 
 # 数据库密码加密KEY
-SECRET_KEY = '&depression_2023#'
+SECRET_KEY = 'your_key'
 
 
