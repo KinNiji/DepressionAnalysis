@@ -1,6 +1,6 @@
 import hashlib
 
-from DbSession import DbSession
+from WebApp.Logic.DbSession import DbSession
 import Config
 
 mysql = DbSession(Config.HOST, Config.USER, Config.PASSWORD, Config.DATABASE, Config.PORT)

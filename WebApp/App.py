@@ -12,7 +12,7 @@ from WebApp.Logic.User import User
 from WebApp.Pages.Login import login
 from WebApp.Pages.OverviewData import overview_data
 from WebApp.Pages.OverviewModel import overview_model
-from WebApp.Pages.Forecast import forecast
+from WebApp.Pages.ForecastProbability import forecast_probability
 from WebApp.Pages.Option import generate_option
 from WebApp.Pages.PathError import path_error
 from WebApp.Components import generate_toast
@@ -35,7 +35,24 @@ navbar = dbc.NavbarSimple(
                     in_navbar=True,
                     label="概览",
                 ),
-                dbc.NavItem(dbc.NavLink("抑郁症预测", href="/forecast")),
+                dbc.DropdownMenu(
+                    children=[
+                        dbc.DropdownMenuItem("数据上传", href="/analysis/upload"),
+                        dbc.DropdownMenuItem("可视化分析", href="/analysis/show"),
+                    ],
+                    nav=True,
+                    in_navbar=True,
+                    label="分析",
+                ),
+                dbc.DropdownMenu(
+                    children=[
+                        dbc.DropdownMenuItem("量表填写", href="/forecast/scale"),
+                        dbc.DropdownMenuItem("抑郁症概率", href="/forecast/probability"),
+                    ],
+                    nav=True,
+                    in_navbar=True,
+                    label="预测",
+                ),
                 dbc.NavItem(id='navbar-login', children=dbc.NavLink("登录", href="/login")),
             ],
             is_open=False,
@@ -97,8 +114,18 @@ def url_route(pathname, user_info):
                     return overview_data
                 elif path_list[1] == "model":
                     return overview_model
+        elif path_list[0] == "analysis":
+            if len(path_list) == 2:
+                if path_list[1] == "upload":
+                    return overview_data
+                elif path_list[1] == "show":
+                    return overview_model
         elif path_list[0] == "forecast":
-            return forecast
+            if len(path_list) == 2:
+                if path_list[1] == "scale":
+                    return overview_data
+                elif path_list[1] == "probability":
+                    return overview_model
         elif path_list[0] == "option":
             return generate_option(user_info)
     else:
@@ -106,13 +133,7 @@ def url_route(pathname, user_info):
             return generate_index(user_info)
         elif path_list[0] == "index":
             return generate_index(user_info)
-        elif path_list[0] == "login":
-            return login
-        elif path_list[0] == "overview":
-            return login
-        elif path_list[0] == "forecast":
-            return login
-        elif path_list[0] == "option":
+        elif path_list[0] in ["login", "overview", "analysis", "forecast", "option"]:
             return login
     return path_error
 
