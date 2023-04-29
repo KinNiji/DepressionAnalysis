@@ -1,0 +1,58 @@
+2023-03-17 14:33:13,115 - DEBUG - this is an debug
+2023-03-17 14:33:13,116 - INFO - this is an info
+2023-03-17 14:33:13,116 - WARNING - this is an warning
+2023-03-17 14:33:13,116 - ERROR - this is an error
+2023-03-17 14:33:13,116 - CRITICAL - this is an critical
+2023-03-17 17:17:46,699 - ERROR - localhost insert failed: not all arguments converted during string formatting - insert into  app_user values (user_name, password)
+2023-03-17 17:21:45,656 - ERROR - localhost insert failed: not all arguments converted during string formatting - insert into  app_user values (user_name, password)
+2023-03-17 17:45:17,449 - ERROR - localhost execute failed: unsupported format character 'w' (0x77) at index 31 - update app_user set password=% where user_name=%s
+2023-03-17 17:48:05,784 - ERROR - localhost execute failed: (1267, "Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '='") - update app_user set password=%s where user_name=%s
+2023-03-20 14:45:45,482 - ERROR - localhost select failed: unsupported operand type(s) for %: 'tuple' and 'tuple' - (('App.Login.LoginCheck', '登录验证', 'select count(*) from app_user where user_name=%s and password=%s', '用户登录'),)
+2023-03-20 15:08:55,419 - ERROR - get sql id failed:  - App.Login.LoginCheck1
+2023-04-25 20:48:18,218 - ERROR - data extract from continuousbloodoxygensaturation failed: '>=' not supported between instances of 'str' and 'datetime.datetime'
+2023-04-25 20:54:02,395 - ERROR - data extract from continuousheartrate failed: entry not a 2- or 3- tuple
+2023-04-25 20:54:52,450 - ERROR - data extract from continuousbloodoxygensaturation failed: entry not a 2- or 3- tuple
+2023-04-25 21:01:45,674 - ERROR - data extract from continuousrri failed: 'processors'
+2023-04-25 22:12:59,694 - ERROR - data extract from continuousrri_test failed: 'col_name'
+2023-04-25 22:54:02,831 - ERROR - localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 22:54:02,831 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 22:55:59,459 - ERROR - localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 22:55:59,459 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 22:59:28,430 - ERROR - localhost insert failed: unhashable type: 'list' - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 22:59:28,430 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost insert failed: unhashable type: 'list' - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:00:37,193 - ERROR - localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:00:37,194 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:02:13,577 - ERROR - localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:02:13,577 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost insert failed: not enough arguments for format string - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:07:07,555 - ERROR - data extract from continuousbloodoxygensaturation failed: unhashable type: 'list'
+2023-04-25 23:18:36,790 - ERROR - localhost insert failed: (1062, "Duplicate entry '1638250234450-168243591215' for key 'app_data_blood_oxygen.PRIMARY'") - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:18:36,790 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost insert failed: (1062, "Duplicate entry '1638250234450-168243591215' for key 'app_data_blood_oxygen.PRIMARY'") - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:21:03,728 - ERROR - localhost insert failed: (1062, "Duplicate entry '1638250234450-168243605946115' for key 'app_data_blood_oxygen.PRIMARY'") - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:21:03,728 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost insert failed: (1062, "Duplicate entry '1638250234450-168243605946115' for key 'app_data_blood_oxygen.PRIMARY'") - insert  into app_data_blood_oxygen (record_time, external_id, blood_oxygen_saturation) values (%s, %s, %s)
+2023-04-25 23:42:40,258 - ERROR - localhost insert failed: (1062, "Duplicate entry '1638277500000-168243734408643' for key 'app_data_workout.PRIMARY'") - insert  into app_data_workout (record_time, external_id, calories_burned, climb_height, distance, heart_rate, activity_name, step) values (%s, %s, %s, %s, %s, %s, %s, %s)
+2023-04-25 23:42:40,258 - ERROR - data extract from dailyworkoutdetail failed: localhost insert failed: (1062, "Duplicate entry '1638277500000-168243734408643' for key 'app_data_workout.PRIMARY'") - insert  into app_data_workout (record_time, external_id, calories_burned, climb_height, distance, heart_rate, activity_name, step) values (%s, %s, %s, %s, %s, %s, %s, %s)
+2023-04-27 20:06:35,309 - ERROR - data extract from continuousrri_test failed: invalid literal for int() with base 10: 'f2150d81-e4f3-11ed-abca-92de8086562559'
+2023-04-27 20:10:12,347 - ERROR - data extract from continuousrri failed: 'continuousrri'
+2023-04-28 18:10:17,009 - ERROR - data extract from continuousbloodoxygensaturation failed: Invalid comparison between dtype=int64 and str
+2023-04-28 18:15:10,409 - ERROR - data extract from continuousbloodoxygensaturation failed: Invalid comparison between dtype=int64 and str
+2023-04-28 18:17:05,301 - ERROR - data extract from continuousbloodoxygensaturation failed: Invalid comparison between dtype=int64 and str
+2023-04-28 18:24:31,629 - ERROR - localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 18:24:31,630 - ERROR - data extract from dailyworkoutdetail failed: localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 18:40:37,530 - ERROR - localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 18:40:37,530 - ERROR - data extract from dailyworkoutdetail failed: localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 18:43:32,473 - ERROR - localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 18:43:32,473 - ERROR - data extract from continuousheartrate failed: localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 18:51:11,914 - ERROR - localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 18:51:11,914 - ERROR - data extract from continuousheartrate failed: localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:44:51,780 - ERROR - localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:44:51,780 - ERROR - data extract from dailyworkoutdetail failed: localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:50:31,654 - ERROR - localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:50:31,654 - ERROR - data extract from dailyworkoutdetail failed: localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:55:35,111 - ERROR - localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:55:35,111 - ERROR - data extract from dailyworkoutdetail failed: localhost execute failed: not enough arguments for format string - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:57:41,775 - ERROR - localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:57:41,776 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:58:19,341 - ERROR - localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 19:58:19,342 - ERROR - data extract from dailyworkoutdetail failed: localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 20:00:09,572 - ERROR - localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-04-28 20:00:09,572 - ERROR - data extract from continuousheartrate failed: localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s

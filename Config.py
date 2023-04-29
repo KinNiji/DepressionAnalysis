@@ -78,59 +78,108 @@ END_TIME = "2021-12-16 00:00:00"
 #     uploadtime
 # endregion
 
+EXTRACT_INFO_COMMON = {
+
+}
+
 
 EXTRACT_INFO = {
-    "second": {
-        'continuousrri': {
-            'useful_cols': ['recordtime', 'externalid', 'rriData'],
-            'processer': {
-                'col_name': 'rriData',
-                'df_col_name': ['rri(ms)', 'sqi', 'timestamp'],
-                'df_col_path': [
-                    ['rri', 'value'],
-                    ['sqi'],
-                    ['timeFrame', 'timestamp']
-                ]
+    'continuousrri': {
+        'useful_cols': ['recordtime', 'externalid', 'rriData'],
+        'processor': {
+            'col_name': 'rriData',
+            'sampling_unit': 'second',
+            'detail_path': {
+                'rri': '$.rri.value',
+                'sqi': '$.sqi',
+                'timestamp': '$.timeFrame.timestamp'
+            },
+            'detail_unit': {
+                'rri': 'ms',
+                'sqi': '',
+                'timestamp': ''
             }
-        }
+        },
+        'dtype': {
+            'record_time': 'int64',
+            'external_id': 'int64',
+            'rri': 'int',
+            'sqi': 'int',
+            'timestamp': 'int64',
+        },
+        'table_name': 'app_data_rri'
     },
-    "minute": {
-        'continuousbloodoxygensaturation': {
-            'useful_cols': ['recordtime', 'externalid', 'avgOxygenSaturation'],
-            'processer': {
-                'col_name': 'avgOxygenSaturation',
-                'df_col_name': ['oxygenSaturation(%)'],
-                'df_col_path': [
-                    ['oxygenSaturation', 'value']
-                ]
+    'continuousbloodoxygensaturation': {
+        'useful_cols': ['recordtime', 'externalid', 'avgOxygenSaturation'],
+        'processor': {
+            'col_name': 'avgOxygenSaturation',
+            'sampling_unit': 'minute',
+            'detail_path': {
+                'blood_oxygen_saturation': '$.oxygenSaturation.value'
+            },
+            'detail_unit': {
+                'blood_oxygen_saturation': '%'
             }
         },
-        'continuousheartrate': {
-            'useful_cols': ['recordtime', 'externalid', 'avgHeartRate'],
-            'processer': {
-                'col_name': 'avgHeartRate',
-                'df_col_name': ['heartRate(beats/min)'],
-                'df_col_path': [
-                    ['heartRate', 'value']
-                ]
+        'dtype': {
+            'record_time': 'int64',
+            'external_id': 'int64',
+            'blood_oxygen_saturation': 'float',
+        },
+        'table_name': 'app_data_blood_oxygen'
+    },
+    'continuousheartrate': {
+        'useful_cols': ['recordtime', 'externalid', 'avgHeartRate'],
+        'processor': {
+            'col_name': 'avgHeartRate',
+            'sampling_unit': 'minute',
+            'detail_path': {
+                'heart_rate': '$.heartRate.value'
+            },
+            'detail_unit': {
+                'heart_rate': 'beat'
             }
         },
-        'dailyworkoutdetail': {
-            'useful_cols': ['recordtime', 'externalid', 'physicalActivity'],
-            'processer': {
-                'col_name': 'physicalActivity',
-                'df_col_name': ['caloriesBurned(cal)', 'climbHeight(m)', 'distance(m)', 'heartRate(beats/min)',
-                                'activityName', 'step(steps)'],
-                'df_col_path': [
-                    ['caloriesBurned', 'value'],
-                    ['climbHeight', 'value'],
-                    ['distance', 'value'],
-                    ['heartRate', 'value'],
-                    ['activityName'],
-                    ['step', 'value']
-                ],
+        'dtype': {
+            'record_time': 'int64',
+            'external_id': 'int64',
+            'heart_rate': 'int',
+        },
+        'table_name': 'app_data_heart_rate'
+    },
+    'dailyworkoutdetail': {
+        'useful_cols': ['recordtime', 'externalid', 'physicalActivity'],
+        'processor': {
+            'col_name': 'physicalActivity',
+            'sampling_unit': 'minute',
+            'detail_path': {
+                'calories_burned': '$.caloriesBurned.value',
+                'climb_height': '$.climbHeight.value',
+                'distance': '$.distance.value',
+                'heart_rate': '$.heartRate.value',
+                'activity_name': '$.activityName',
+                'step': '$.step.value',
+            },
+            'detail_unit': {
+                'calories_burned': 'calorie',
+                'climb_height': 'm',
+                'distance': 'm',
+                'heart_rate': 'beat',
+                'activity_name': '',
+                'step': 'step',
             }
-        }
+        },
+        'dtype': {
+            'record_time': 'int64',
+            'external_id': 'int64',
+            'calories_burned': 'float',
+            'climb_height': 'float',
+            'distance': 'float',
+            'heart_rate': 'int',
+            'activity_name': 'str',
+            'step': 'int',
+        },
+        'table_name': 'app_data_workout'
     }
 }
 
@@ -164,9 +213,9 @@ EXTRACTED_DTYPE = {
 ## 数据库配置
 # 数据库连接
 HOST = "localhost"
-PORT = 3306
+PORT = 3307
 USER = "root"
-PASSWORD = "110crAftion"
+PASSWORD = "123456"
 DATABASE = "depression"
 
 # 数据库密码加密KEY

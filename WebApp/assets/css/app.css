@@ -8,4 +8,7 @@ body {
 
 #content {
 	font-family: 'Montserrat', sans-serif;
+	width: 70%;
+	min-width: 1000px;
+	margin: 0 auto;
 }

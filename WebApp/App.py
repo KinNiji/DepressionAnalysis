@@ -1,7 +1,10 @@
+import base64
 import datetime
+import io
 import time
 
 import dash
+import pandas as pd
 from dash import html, dcc, Input, Output, State, ctx
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
@@ -9,6 +12,7 @@ from dash.exceptions import PreventUpdate
 import Utils
 from WebApp.Pages.Index import generate_index
 from WebApp.Logic.User import User
+from WebApp.Logic.DataManager import DataManager
 from WebApp.Pages.Login import login
 from WebApp.Pages.OverviewData import overview_data
 from WebApp.Pages.OverviewModel import overview_model
@@ -21,6 +25,7 @@ from WebApp.Pages.PathError import path_error
 from WebApp.Components import generate_toast
 
 user = User()
+data_manager = DataManager()
 
 navbar = dbc.NavbarSimple(
     children=[
@@ -239,16 +244,54 @@ def _(n, email, password, login_history):
      Output('sign-in-toast', 'children'),
      Output('sign-in-toast', 'icon')],
     Input('user-info', 'data'),
+    State('location', 'pathname'),
     prevent_initial_call=True
 )
-def _(user_info):
-    print('用户登录后', user_info)
+def _(user_info, pathname):
+    print('用户登录后', user_info, pathname)
     if user_info:
-        return dbc.NavLink(user_info['user_name'], href="/option"), '/index', True, '登陆成功，欢迎使用！', 'primary'
+        if pathname == '/login':
+            return dbc.NavLink(user_info['user_name'], href="/option"), '/index', True, '登陆成功，欢迎使用！', 'primary'
+        else:
+            return dbc.NavLink(user_info['user_name'], href="/option"), pathname, False, '登陆成功，欢迎使用！', 'primary'
     elif user_info == {}:
         return dbc.NavLink("登录", href="/login"), '/login', True, '登陆失败，请检查用户名和密码！', 'danger'
     else:
         raise PreventUpdate
+
+
+# 上传文件
+@app.callback(
+    Output('upload-result', 'children'),
+    Input('upload', 'contents'),
+    State('upload', 'filename'),
+    State('user-info', 'data'),
+    prevent_initial_call=True
+)
+def update_output(list_of_contents, list_of_names, user_info):
+    print('文件上传', list_of_names)
+    if list_of_names is not None:
+        if 'continuousrri.csv' in list_of_names \
+                and 'continuousbloodoxygensaturation.csv' in list_of_names \
+                and 'continuousheartrate.csv' in list_of_names \
+                and 'dailyworkoutdetail.csv' in list_of_names:
+            current_time = int(datetime.datetime.now().timestamp() * 1000)
+            for contents, filename in zip(list_of_contents, list_of_names):
+                print(filename)
+                content_type, content_string = contents.split(',')
+                content_base64 = base64.b64decode(content_string)
+                filename = filename.split('.')[0]
+                try:
+                    df = pd.read_csv(io.StringIO(content_base64.decode('utf-8')), dtype=str)
+                    data_manager.extract_raw(filename, current_time, user_info['user_id'], df=df)
+                except Exception as err:
+                    return dbc.Alert(f"上传失败：{err}，请在上传记录中查看详细信息！", color="secondary")
+
+            return dbc.Alert("上传成功，请在上传记录中查看详细信息！", color="primary")
+        else:
+            return dbc.Alert("文件缺失，请重新选择上传！", color="secondary")
+    else:
+        return dbc.Alert("未选择文件或文件类型不符！", color="secondary")
 
 
 # endregion

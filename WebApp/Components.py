@@ -14,22 +14,28 @@ def generate_toast(_id, header='提示', icon='primary'):
     )
 
 
-def generate_upload(_id):
-    return dcc.Upload(
+def generate_modal(_id, text_id, close_id, title='提示', close='关闭', centered=True, backdrop=True):
+    return dbc.Modal(
         id=_id,
-        children=html.Div([
-            '将文件拖拽至此',
-            html.A('或选择文件上传')
-        ]),
-        style={
-            'width': '100%',
-            'height': '60px',
-            'lineHeight': '60px',
-            'borderWidth': '1px',
-            'borderStyle': 'dashed',
-            'borderRadius': '5px',
-            'textAlign': 'center',
-            'margin': '10px'
-        },
-        multiple=True
+        children=[
+            dbc.ModalHeader(dbc.ModalTitle(title), close_button=True),
+            dbc.ModalBody(id=text_id),
+            dbc.ModalFooter(
+                dbc.Button(
+                    close,
+                    id=close_id,
+                    className="ms-auto",
+                )
+            ),
+        ],
+        centered=centered,
+        backdrop=backdrop,
+        is_open=False,
     )
+
+
+def generate_tooltip(target, text):
+    return dbc.Tooltip(
+        children=text,
+        target=target,
+    ),

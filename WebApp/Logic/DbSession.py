@@ -61,7 +61,7 @@ class DbSession(object):
               f"values {self.list2tuple_str(['%s' for _ in range(len(data.keys()))])}"
         try:
             if many:
-                row_count = cursor.executemany(sql, [data[_] for _ in data.keys()])
+                row_count = cursor.executemany(sql, list(zip(*data.values())))
             else:
                 row_count = cursor.execute(sql, list(data.values()))
         except Exception as err:
@@ -72,7 +72,7 @@ class DbSession(object):
             cursor.close()
         return row_count
 
-    def execute(self, sql: str, many=False, *args) -> int:
+    def execute(self, sql: str, *args, many=False) -> int:
         """
         执行一条sql语句
         :param sql: sql语句
@@ -83,10 +83,11 @@ class DbSession(object):
         cursor = self._conn.cursor()
         try:
             if many:
-                row_count = cursor.executemany(sql, args)
+                row_count = cursor.executemany(sql, args[:-1])
             else:
-                row_count = cursor.execute(sql, args)
+                row_count = cursor.execute(sql, args[:-1])
         except Exception as err:
+            print(args)
             format_err = f"{self._host} execute failed: {err} - {sql}"
             Logger().error(format_err)
             raise Exception(format_err)
@@ -94,7 +95,7 @@ class DbSession(object):
             cursor.close()
         return row_count
 
-    def insert(self, sql: str, many=False, *args) -> int:
+    def insert(self, sql: str, *args, many=False) -> int:
         """
         执行一条插入sql语句
         :param sql: sql语句
@@ -102,9 +103,9 @@ class DbSession(object):
         :param args: 参数
         :return: int 返回影响的行数
         """
-        return self.execute(sql, many, *args)
+        return self.execute(sql, *args, many)
 
-    def delete(self, sql: str, many=False, *args) -> int:
+    def delete(self, sql: str, *args, many=False) -> int:
         """
         执行一条删除sql语句
         :param sql: sql语句
@@ -112,9 +113,9 @@ class DbSession(object):
         :param args: 参数
         :return: int 返回影响的行数
         """
-        return self.execute(sql, many, *args)
+        return self.execute(sql, *args, many)
 
-    def update(self, sql: str, many=False, *args) -> int:
+    def update(self, sql: str, *args, many=False) -> int:
         """
         执行一条更新sql语句
         :param sql: sql语句
@@ -122,7 +123,7 @@ class DbSession(object):
         :param args: 参数
         :return: int 返回影响的行数
         """
-        return self.execute(sql, many, *args)
+        return self.execute(sql, *args, many)
 
     def select(self, sql: str, *args) -> list:
         """

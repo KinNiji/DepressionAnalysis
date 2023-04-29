@@ -1,6 +1,5 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
-from WebApp.Components import generate_upload
 
 forecast_probability = html.Div(
     [
