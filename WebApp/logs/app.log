@@ -56,3 +56,66 @@
 2023-04-28 19:58:19,342 - ERROR - data extract from dailyworkoutdetail failed: localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
 2023-04-28 20:00:09,572 - ERROR - localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
 2023-04-28 20:00:09,572 - ERROR - data extract from continuousheartrate failed: localhost execute failed: not all arguments converted during string formatting - update app_upload set upload_info=%s where timestamp=%s and user_id=%s
+2023-05-09 17:02:22,792 - ERROR - localhost select failed: not enough arguments for format string - select * 
+from %s 
+where external_id like concat(%s, '%')
+2023-05-09 17:05:04,608 - ERROR - localhost select failed: not enough arguments for format string - select * 
+from %s 
+where external_id like concat(%s, '%') - ('app_data_blood_oxygen', 1683273846702)
+2023-05-09 17:07:00,377 - ERROR - localhost select failed: not enough arguments for format string - select * 
+from %s 
+where external_id like concat(%s, '%') - ('app_data_blood_oxygen', '1683273846702')
+2023-05-09 17:08:32,903 - ERROR - localhost select failed: not enough arguments for format string - select * 
+from %s 
+where external_id like concat(%s, '%') - ('app_data_blood_oxygen', '1683273846702%')
+2023-05-09 17:08:42,058 - ERROR - localhost select failed: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''app_data_blood_oxygen' \r\nwhere external_id like '1683273846702%'' at line 2") - select * 
+from %s 
+where external_id like %s - ('app_data_blood_oxygen', '1683273846702%')
+2023-05-09 17:09:46,850 - ERROR - localhost select failed: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''app_data_blood_oxygen' where external_id like '1683273846702%'' at line 1") - select * from %s where external_id like %s - ('app_data_blood_oxygen', '1683273846702%')
+2023-05-09 17:50:19,363 - ERROR - data extract from continuousrri failed: "Only a column name can be used for the key in a dtype mappings argument. 'timestamp' not found in columns."
+2023-05-09 18:19:05,180 - ERROR - localhost select failed: (1054, "Unknown column 'timestamp' in 'field list'") - select 
+	timestamp, 
+	user_id, 
+	upload_info 
+from app_upload  - ()
+2023-05-09 22:46:48,301 - ERROR - localhost select failed: (1054, "Unknown column 'timestamp' in 'where clause'") - select 
+	upload_time, 
+	upload_user_id, 
+	upload_info 
+from app_upload 
+where timestamp=%s 
+and user_id=%s - (1683643607987, 1)
+2023-05-09 22:46:48,347 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost select failed: (1054, "Unknown column 'timestamp' in 'where clause'") - select 
+	upload_time, 
+	upload_user_id, 
+	upload_info 
+from app_upload 
+where timestamp=%s 
+and user_id=%s - (1683643607987, 1)
+2023-05-09 22:55:10,791 - ERROR - data extract from continuousbloodoxygensaturation failed: %d format: a number is required, not str
+2023-05-10 14:44:07,983 - ERROR - data extract from dailyworkoutdetail failed: "Only a column name can be used for the key in a dtype mappings argument. 'heart_rate' not found in columns."
+2023-05-10 15:10:34,280 - ERROR - data resample failed: "Only a column name can be used for the key in a dtype mappings argument. 'external_id' not found in columns."
+2023-05-10 18:22:59,520 - ERROR - data extract from continuousrri failed: [Errno 2] No such file or directory: 'WebApp/data/1683703843555/raw/continuousrri.csv/continuousrri.csv'
+2023-05-10 18:23:43,075 - ERROR - data extract from continuousrri failed: [Errno 2] No such file or directory: 'WebApp/data/1683703843555/raw/continuousrri.csv'
+2023-05-10 19:21:08,956 - ERROR - data resample failed: 'NoneType' object is not subscriptable
+2023-05-10 19:25:03,482 - ERROR - data resample failed: Cannot convert non-finite values (NA or inf) to integer
+2023-05-10 23:08:22,300 - ERROR - data resample failed: Cannot save file into a non-existent directory: 'WebApp\data\1683703843555\resampled\continuousrri'
+2023-05-10 23:44:25,419 - ERROR - data resample failed: Cannot save file into a non-existent directory: 'WebApp\data\1683719359062\resampled\minute'
+2023-05-17 16:01:12,107 - ERROR - data extract from continuousbloodoxygensaturation failed: [WinError 3] 系统找不到指定的路径。: 'WebApp/data/1683703843555/extracted/continuousbloodoxygensaturation'
+2023-05-17 16:03:13,792 - ERROR - data extract from continuousbloodoxygensaturation failed: the JSON object must be str, bytes or bytearray, not dict
+2023-05-17 16:04:14,475 - ERROR - localhost execute failed: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''continuousbloodoxygensaturation': '1'} \r\nwhere upload_time='1683703843555' \r\nan' at line 1") - update app_data_pid set extract_info=%s 
+where upload_time=%s 
+and upload_user_id=%s
+and external_id=%s - ({'continuousbloodoxygensaturation': True}, '1683703843555', '1', 17, False)
+2023-05-17 16:04:14,475 - ERROR - data extract from continuousbloodoxygensaturation failed: localhost execute failed: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''continuousbloodoxygensaturation': '1'} \r\nwhere upload_time='1683703843555' \r\nan' at line 1") - update app_data_pid set extract_info=%s 
+where upload_time=%s 
+and upload_user_id=%s
+and external_id=%s - ({'continuousbloodoxygensaturation': True}, '1683703843555', '1', 17, False)
+2023-05-17 16:05:38,377 - ERROR - data extract from continuousbloodoxygensaturation failed: 'dtype'
+2023-05-17 16:30:13,644 - ERROR - data resample failed: Cannot save file into a non-existent directory: 'data\1683703843555\resampled\minute'
+2023-05-18 22:12:25,254 - ERROR - localhost select failed: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from app_data_pid' at line 6") - select 
+	pid, 
+	upload_time, 
+	upload_user_id, 
+	external_id, 
+from app_data_pid - ()

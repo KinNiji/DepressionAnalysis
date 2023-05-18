@@ -1,3 +1,4 @@
+from dash import dash_table
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
@@ -38,12 +39,38 @@ analysis_upload = html.Div(
                                         },
                                         multiple=True
                                     ),
-                                    dbc.Spinner(html.Div(id='upload-result'), type="grow"),
+                                    dbc.Spinner(
+                                        html.Div(id='upload-result'),
+                                        type="grow",
+                                        color="primary",
+                                        spinner_style={
+                                            "width": "3rem",
+                                            "height": "3rem",
+                                            'margin': '10px 0 10px'
+                                        }
+                                    ),
                                 ],
                                 label="文件上传"
                             ),
                             dbc.Tab(
                                 children=[
+                                    html.P(),
+                                    html.Div(
+                                        [
+                                            html.Div('查询上传记录后，单击某条记录以查看详情'),
+                                            dbc.Button(
+                                                id='upload-record-search',
+                                                children="查询"
+                                            ),
+                                        ],
+                                        className="my-2 d-flex align-items-center justify-content-md-between",
+                                    ),
+                                    dash_table.DataTable(
+                                        id='upload-record-table',
+                                        fixed_rows={'headers': True},
+                                        style_table={'overflowX': 'auto'},
+                                        page_size=10
+                                    ),
 
                                 ],
                                 label="上传记录"
@@ -55,23 +82,33 @@ analysis_upload = html.Div(
             ),
             dbc.Col(
                 children=[
-                    html.H2("数据操作"),
-                    dbc.Tabs(
+                    html.H2("数据处理"),
+                    dash_table.DataTable(
+                        id='upload-detail-table',
+                        fixed_rows={'headers': True},
+                        style_table={'overflowX': 'auto'},
+                    ),
+                    html.Div(
                         [
-                            dbc.Tab(
-                                children=[
-
-                                ],
-                                label="有效信息抽取"
+                            html.Div('选中左侧某条上传记录后，单击右侧按钮可重采样该次上传中的所有数据'),
+                            dbc.Button(
+                                id='upload-detail-resample',
+                                children="重采样数据",
+                                disabled=True
                             ),
-                            dbc.Tab(
-                                children=[
-
-                                ],
-                                label="数据预处理"
-                            )
-                        ]
-                    )
+                        ],
+                        className="my-2 d-flex align-items-center justify-content-md-between",
+                    ),
+                    dbc.Spinner(
+                        html.Div(id='resample-result'),
+                        type="grow",
+                        color="primary",
+                        spinner_style={
+                            "width": "3rem",
+                            "height": "3rem",
+                            'margin': '10px 0 10px'
+                        }
+                    ),
                 ],
                 width=8
             ),

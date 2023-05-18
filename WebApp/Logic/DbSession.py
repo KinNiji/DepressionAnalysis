@@ -88,7 +88,7 @@ class DbSession(object):
                 row_count = cursor.execute(sql, args[:-1])
         except Exception as err:
             print(args)
-            format_err = f"{self._host} execute failed: {err} - {sql}"
+            format_err = f"{self._host} execute failed: {err} - {sql} - {args}"
             Logger().error(format_err)
             raise Exception(format_err)
         finally:
@@ -138,7 +138,7 @@ class DbSession(object):
             if cursor.execute(sql, list(args)):
                 result = cursor.fetchall()
         except Exception as err:
-            format_err = f"{self._host} select failed: {err} - {sql}"
+            format_err = f"{self._host} select failed: {err} - {sql} - {args}"
             Logger().error(format_err)
             raise Exception(format_err)
         finally:

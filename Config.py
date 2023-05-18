@@ -8,16 +8,16 @@ LABEL_FILE_PATH_BEFORE = "data/scale/raw/scale_before.xlsx"
 LABEL_FILE_PATH_AFTER = "data/scale/raw/scale_after.xlsx"
 LABEL_FILE_PATH_EMA = "data/scale/raw/ema.csv"
 LABEL_FILE_PATH = "data/scale"
-
+# app文件路径
+APP_DATA_FILE_PATH = "data"
 
 ## 数据抽取条件
 # 开始时间 
-BEGIN_TIME = "2021-11-15 00:00:00"
+BEGIN_TIME_STR = "2021-11-15 00:00:00"
 # 结束时间
-END_TIME = "2021-12-16 00:00:00"
+END_TIME_STR = "2021-12-16 00:00:00"
+
 # 抽取条件 {颗粒度：{文件名：{条件}}}
-
-
 # region 数据结构详情
 
 ## continuousrri
@@ -82,7 +82,6 @@ EXTRACT_INFO_COMMON = {
 
 }
 
-
 EXTRACT_INFO = {
     'continuousrri': {
         'useful_cols': ['recordtime', 'externalid', 'rriData'],
@@ -101,13 +100,13 @@ EXTRACT_INFO = {
             }
         },
         'dtype': {
+            # 'upload_time': 'int64',
+            'external_id': 'int',
             'record_time': 'int64',
-            'external_id': 'int64',
             'rri': 'int',
             'sqi': 'int',
-            'timestamp': 'int64',
         },
-        'table_name': 'app_data_rri'
+        # 'table_name': 'app_data_rri'
     },
     'continuousbloodoxygensaturation': {
         'useful_cols': ['recordtime', 'externalid', 'avgOxygenSaturation'],
@@ -122,11 +121,12 @@ EXTRACT_INFO = {
             }
         },
         'dtype': {
+            # 'upload_time': 'int64',
+            'external_id': 'int',
             'record_time': 'int64',
-            'external_id': 'int64',
             'blood_oxygen_saturation': 'float',
         },
-        'table_name': 'app_data_blood_oxygen'
+        # 'table_name': 'app_data_blood_oxygen'
     },
     'continuousheartrate': {
         'useful_cols': ['recordtime', 'externalid', 'avgHeartRate'],
@@ -141,11 +141,12 @@ EXTRACT_INFO = {
             }
         },
         'dtype': {
+            # 'upload_time': 'int64',
+            'external_id': 'int',
             'record_time': 'int64',
-            'external_id': 'int64',
             'heart_rate': 'int',
         },
-        'table_name': 'app_data_heart_rate'
+        # 'table_name': 'app_data_heart_rate'
     },
     'dailyworkoutdetail': {
         'useful_cols': ['recordtime', 'externalid', 'physicalActivity'],
@@ -153,10 +154,10 @@ EXTRACT_INFO = {
             'col_name': 'physicalActivity',
             'sampling_unit': 'minute',
             'detail_path': {
-                'calories_burned': '$.caloriesBurned.value',
+                'dailyworkoutdetail': '$.caloriesBurned.value',
                 'climb_height': '$.climbHeight.value',
                 'distance': '$.distance.value',
-                'heart_rate': '$.heartRate.value',
+                'heart_rate_workout': '$.heartRate.value',
                 'activity_name': '$.activityName',
                 'step': '$.step.value',
             },
@@ -164,49 +165,85 @@ EXTRACT_INFO = {
                 'calories_burned': 'calorie',
                 'climb_height': 'm',
                 'distance': 'm',
-                'heart_rate': 'beat',
-                'activity_name': '',
+                'heart_rate_workout': 'beat',
+                'activity_name': 'str',
                 'step': 'step',
             }
         },
         'dtype': {
+            # 'upload_time': 'int64',
+            'external_id': 'int',
             'record_time': 'int64',
-            'external_id': 'int64',
             'calories_burned': 'float',
             'climb_height': 'float',
             'distance': 'float',
-            'heart_rate': 'int',
+            'heart_rate_workout': 'int',
             'activity_name': 'str',
             'step': 'int',
         },
-        'table_name': 'app_data_workout'
+        # 'table_name': 'app_data_workout'
     }
 }
 
 # 抽取后数据类型
-EXTRACTED_DTYPE = {
-    'continuousrri': {
-        'rri': 'int',
-        'sqi': 'int',
-        'timestamp': 'int64',
-    },
-    'continuousbloodoxygensaturation': {
-        'oxygenSaturation(%)': 'float',
-        'timestamp': 'int64'
-    },
-    'continuousheartrate': {
-        'heartRate(beats/min)': 'int',
-        'timestamp': 'int64'
-    },
-    'dailyworkoutdetail': {
-        'caloriesBurned(cal)': 'float',
-        'climbHeight(m)': 'float',
-        'distance(m)': 'float',
-        'heartRate(beats/min)': 'int',
-        'activityName': 'str',
-        'step(steps)': 'int',
-        'timestamp': 'int64',
-    }
+OPTIONS = {
+    'counting': [
+        {'label': '单人统计——通过`时/日/周`对数据进行某人的数据进行聚合', 'value': 'single'},
+        {'label': '多人统计——通过不同的图表对数据进行多人的数据进行聚合', 'value': 'multiple'},
+    ],
+    'file_type': [
+        {'label': '抽取数据', 'value': 'extracted_file'},
+        {'label': '重采样数据', 'value': 'resampled_file'},
+    ],
+    'extracted_file': [
+        {'label': '持续血氧', 'value': 'continuousbloodoxygensaturation'},
+        {'label': '持续心率', 'value': 'continuousheartrate'},
+        {'label': '持续RRI', 'value': 'continuousrri'},
+        {'label': '运动细节', 'value': 'dailyworkoutdetail'},
+    ],
+    'resampled_file': [
+        {'label': '分钟', 'value': 'minute'},
+        {'label': '秒', 'value': 'second'},
+    ],
+    'continuousbloodoxygensaturation': [
+        {'label': '血氧饱和度', 'value': 'blood_oxygen_saturation'}
+    ],
+    'continuousheartrate': [
+        {'label': '心率', 'value': 'heart_rate'}
+    ],
+    'continuousrri': [
+        {'label': 'RRI', 'value': 'rri'}
+    ],
+    'dailyworkoutdetail': [
+        {'label': '消耗卡路里', 'value': 'calories_burned'},
+        {'label': '攀爬高度', 'value': 'climb_height'},
+        {'label': '距离', 'value': 'distance'},
+        {'label': '期间心率', 'value': 'heart_rate_workout'},
+        {'label': '步数', 'value': 'step'},
+    ],
+    'minute': [
+        {'label': '血氧饱和度', 'value': 'blood_oxygen_saturation'},
+        {'label': '心率', 'value': 'heart_rate'},
+        {'label': '消耗卡路里', 'value': 'calories_burned'},
+        {'label': '攀爬高度', 'value': 'climb_height'},
+        {'label': '距离', 'value': 'distance'},
+        {'label': '期间心率', 'value': 'heart_rate_workout'},
+        {'label': '步数', 'value': 'step'},
+    ],
+    'second': [
+        {'label': 'RRI', 'value': 'rri'}
+    ],
+    'single': [
+        {'label': '小时', 'value': 'hour'},
+        {'label': '日', 'value': 'day'},
+        {'label': '周', 'value': 'week'},
+    ],
+    'multiple': [
+        {'label': '小提琴图', 'value': 'violin'},
+        {'label': '箱型图', 'value': 'box'},
+        {'label': '直方图', 'value': 'hist'},
+        {'label': '热图', 'value': 'heat'},
+    ]
 }
 
 
@@ -220,5 +257,3 @@ DATABASE = "depression"
 
 # 数据库密码加密KEY
 SECRET_KEY = '&depression_2023#'
-
-

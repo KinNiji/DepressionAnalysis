@@ -4,12 +4,18 @@ import logging
 import pandas as pd
 
 
-# region 时间格式转换方法
+# region 时间方法
 def time2timestamp(time_obj: datetime.datetime) -> int:
     return int(time.mktime(time_obj.timetuple()) * 1000)
 
 
-def timestamp2time(timestamp):
+def timestamp2time(timestamp) -> datetime.datetime:
+    if len(str(timestamp)) == 13:
+        timestamp = int(timestamp) / 1000
+    return datetime.datetime.fromtimestamp(int(timestamp))
+
+
+def timestamp2timestr(timestamp) -> str:
     if len(str(timestamp)) == 13:
         timestamp = int(timestamp) / 1000
     return datetime.datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d %H:%M:%S')
@@ -21,9 +27,8 @@ def timestr2time(timestr: str) -> datetime.datetime:
 
 def timestr2timestamp(timestr: str) -> int:
     return time2timestamp(timestr2time(timestr))
-
-
 # endregion
+
 
 # region 异常值处理
 def abnormal_processing(df: pd.DataFrame, col_name: str, mask_fun, fill_fun=None) -> pd.DataFrame:
@@ -34,13 +39,16 @@ def abnormal_processing(df: pd.DataFrame, col_name: str, mask_fun, fill_fun=None
     else:
         return df_copy
 
+
 def mask_low_sqi(df, col_name):
     df[col_name] = df[col_name].mask(df['sqi'] == '0')
     return df
 
+
 def mask_over_3std(df, col_name):
     df[col_name] = df[col_name].mask((df[col_name] - df[col_name].mean()) >= 3 * df[col_name].std())
     return df
+
 
 def fill_nearest(df, col_name):
     df[col_name] = df[col_name].interpolate(method='nearest')
@@ -51,6 +59,13 @@ def linear_interpolation(X, x1, y1, x2, y2):
     return y1 + (y2 - y1) * (X - x1) / (x2 - x1)
 # endregion
 
+
+def quantile_25(x):
+    return x.quantile(0.25)
+
+
+def quantile_75(x):
+    return x.quantile(0.75)
 
 
 class Logger(object):
